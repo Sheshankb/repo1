@@ -1,0 +1,35 @@
+name: Release Pipeline
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run tests
+      run: |
+        if [ -f tests/test_example.py ]; then pytest tests; fi
+
+    - name: Build project
+      run: |
+        echo 'print("Building project...")' > build.py
+        python build.py
+
+    - name: Release complete
+      run: echo "Release complete!"
