@@ -1,0 +1,12 @@
+name: 'DBT_FabricWH'  # Replace this with your project name
+version: '1.0.0'
+
+# Configuring model paths
+model-paths: ["models"]
+
+# Specify the target database/schema
+profile: 'Fabric'    # Replace with your profile name (this links to the connection profile you set up)
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_modules"
